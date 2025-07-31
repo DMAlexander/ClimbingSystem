@@ -195,7 +195,10 @@ void UCustomMovementComponent::PhysClimb(float deltaTime, int32 Iterations)
     ProcessClimbableSurfaceInfo();
 
     /*Check if we should stop climbing*/
-
+    if(CheckShouldStopClimbing())
+    {
+        StopClimbing();
+    }
 
     RestorePreAdditiveRootMotionVelocity();
 
@@ -247,6 +250,22 @@ void UCustomMovementComponent::ProcessClimbableSurfaceInfo()
 
     // Debug::Print(TEXT("ClimbableSurfaceLocation: ") + CurrentClimbableSurfaceLocation.ToCompactString(),FColor::Cyan,1);
     // Debug::Print(TEXT("ClimbableSurfaceNormal: ") + CurrentClimbableSurfaceNormal.ToCompactString(),FColor::Red,2);
+}
+
+bool UCustomMovementComponent::CheckShouldStopClimbing()
+{
+    if(ClimbableSurfacesTracedResults.IsEmpty()) return true;
+
+    const float DotResult = FVector::DotProduct(CurrentClimbableSurfaceNormal,FVector::UpVector);
+    const float DegreeDiff = FMath::RadiansToDegrees(FMath::Acos(DotResult));
+
+    if(DegreeDiff<=60.f)
+    {
+        return true;
+    }
+    Debug::Print(TEXT("Degree Diff: ") + FString::SanitizeFloat(DegreeDiff),FColor::Cyan,1);
+
+    return false;
 }
 
 FQuat UCustomMovementComponent::GetClimbRotation(float DeltaTime)
