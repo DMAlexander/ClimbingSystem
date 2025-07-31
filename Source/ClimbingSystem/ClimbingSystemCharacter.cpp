@@ -71,7 +71,7 @@ void AClimbingSystemCharacter::BeginPlay()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void AClimbingSystemCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void AClimbingSystemCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
@@ -86,6 +86,7 @@ void AClimbingSystemCharacter::SetupPlayerInputComponent(class UInputComponent* 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AClimbingSystemCharacter::Look);
 
+		EnhancedInputComponent->BindAction(ClimbAction, ETriggerEvent::Started, this, &AClimbingSystemCharacter::OnClimbActionStarted);
 	}
 
 }
@@ -126,6 +127,9 @@ void AClimbingSystemCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-
+void AClimbingSystemCharacter::OnClimbActionStarted(const FInputActionValue &Value)
+{
+	Debug::Print(TEXT("Climb action started"));
+}
 
 
