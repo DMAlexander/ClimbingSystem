@@ -77,6 +77,7 @@ void AClimbingSystemCharacter::BeginPlay()
 
 void AClimbingSystemCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		

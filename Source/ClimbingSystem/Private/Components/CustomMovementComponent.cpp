@@ -137,5 +137,5 @@ FHitResult UCustomMovementComponent::TraceFromEyeHeight(float TraceDistance, flo
         const FVector Start = ComponentLocation + EyeHeightOffset;
         const FVector End = Start + UpdatedComponent->GetForwardVector() * TraceDistance;
 
-        return DoLineTraceSingleByObject(Start,End,true);
+        return DoLineTraceSingleByObject(Start,End,true,true);
 }
